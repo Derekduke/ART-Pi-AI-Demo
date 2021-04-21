@@ -1,43 +1,13 @@
-# LED闪烁例程
+# ART-Pi AI demo例程
 
 ## 简介
 
-本例程主要功能是让板载的 RGB-LED 中的蓝色 LED 不间断闪烁。
-这个例程也可以做为您的创作的基础工程。
+在RDC2020大会上的ai动手实验环节，使用了RT-AK工具完成了对ai模型的一键式导入，生成了该示例工程，克隆本demo可直接编译下载至ART-Pi进行体验，同时鼓励大家关注最新开源发布的RT-AK:  https://github.com/RT-Thread/RT-AK
 
 ## 硬件说明
-<img src="./figures/blink_pcb.png" alt="LED 连接单片机引脚" style="zoom: 50%;" />
-如上图所示，RGB-LED 属于共阳 LED， **阴极** 分别与单片机的引脚相连，其中蓝色 LED 对应 PI8 引脚。单片机引脚输出低电平即可点亮 LED，输出高电平则会熄灭 LED。
+除ART-Pi之外需使用gc0328摄像头和媒体拓展板。
 
-## 软件说明
-
-闪灯的源代码位于 `/projects/art_pi_blink_led/applications/main.c` 中。首先定义了一个宏 `LED_PIN` ，代表闪灯的 LED 引脚编号，然后与 `GPIO_LED_B`（**PI8**）对应：
-
-```
-#define LED_PIN GET_PIN(I, 8)
-```
-
-在 main 函数中，将该引脚配置为输出模式，并在下面的 while 循环中，周期性（500毫秒）开关 LED。
-
-```
-int main(void)
-{
-    rt_uint32_t count = 1;
-
-    rt_pin_mode(LED_PIN, PIN_MODE_OUTPUT);
-
-    while(count++)
-    {
-        rt_thread_mdelay(500);
-        rt_pin_write(LED_PIN, PIN_HIGH);
-        rt_thread_mdelay(500);
-        rt_pin_write(LED_PIN, PIN_LOW);
-    }
-    return RT_EOK;
-}
-```
-
-
+![image-20210421210744262](D:\RT-ThreadStudio\workspace\art-pi-final\ART-Pi-AI-Demo\pic\image-20210421210744262.png)
 
 ## 运行
 ### 编译&下载
@@ -46,9 +16,9 @@ int main(void)
 
 ### 运行效果
 
-正常运行后，蓝色 LED 会周期性闪烁。
+运行ai_camera命令，摄像头会开始工作，检测到人像之后会将画面定格然后闪烁
 
 ## 注意事项
 
-如果想要修改`LED_PIN` 宏定义，可以通过 GET_PIN 来修改。
+![image-20210421210810111](D:\RT-ThreadStudio\workspace\art-pi-final\ART-Pi-AI-Demo\pic\image-20210421210810111.png)![image-20210421210817807](D:\RT-ThreadStudio\workspace\art-pi-final\ART-Pi-AI-Demo\pic\image-20210421210817807.png)
 
